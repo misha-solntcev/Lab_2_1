@@ -10,26 +10,44 @@ namespace Lab_2_1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Sinus(10, 0.0001));
+            Console.WriteLine(Sinus_01(10, 0.0001));
+            Console.WriteLine(Sinus_02(10, 0.0001));
             Console.ReadKey();
         }
 
         // Функция расчета синуса с использованием разложения в ряд Маклорена.
-        static double Sinus (double Z, double E)
+        static double Sinus_01 (double Z, double E)
         {
-            int degree = 1;
-            double numerator;
-            double denominator = 1;
-            double fraction = 1;
-            double sum = Z;
+            int degree = 1;         // Степень
+            double numerator;       // Числитель
+            double denominator = 1; // Знаменатель
+            double fraction = 1;    // Дробь (текущее слагаемое полинома)
+            double sum = Z;         // Текущая сумма 
             while (Math.Abs(fraction) > E)
             {
                 degree += 2;
                 numerator = Math.Pow(Z, degree);
                 denominator = - denominator * degree * (degree - 1);
                 fraction = numerator / denominator;
-                sum = sum + fraction;                             
+                sum += fraction;                             
             }
+            return sum;
+        }
+
+        // Функция расчета синуса (Второй способ).
+        static double Sinus_02 (double Z, double E)
+        {
+            double sum = Z;
+            double den = 1;
+            for (int k = 2; k < 1000000; k++)
+            {
+                int K = (int) Math.Pow(-1, (k + 1));    // Знак слагаемого. 
+                double num = Math.Pow(Z, (2 * k - 1));  // Числитель.
+                den = den * (2 * k - 1) * (2 * k - 2);  // Знаменатель(факториал).
+                sum += K * num / den;                   // Текущая сумма.
+                if (Math.Abs(K * num / den) < E)
+                    break;                
+            }            
             return sum;
         }
     }
