@@ -10,8 +10,10 @@ namespace Lab_2_1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Sinus_01(10, 0.0001));
-            Console.WriteLine(Sinus_02(10, 0.0001));
+            double Gradus = 10;
+            Console.WriteLine($"Синус {Gradus} градусов = {Sinus_01(Radian(Gradus), 0.0001)}");
+            Console.WriteLine(Sinus_02(Radian(10), 0.0001));
+            
             Console.ReadKey();
         }
 
@@ -49,6 +51,13 @@ namespace Lab_2_1
                     break;                
             }            
             return sum;
+        }
+
+        // Функция перевода градусов в радианы
+        static double Radian (double Z)
+        {
+            double result = Z * Math.PI / 180;
+            return result;
         }
     }
 }
